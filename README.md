@@ -93,6 +93,29 @@ This lab replicates Tier 1-2 SOC analyst workflows including:
 
 ---
 
+## 📸 Lab Walkthrough (Screenshots)
+
+Full step-by-step visual documentation: [screenshots/README.md](screenshots/README.md)
+
+| Step | Screenshot | Description |
+|------|-----------|-------------|
+| 1 | [wazuh-installation-complete.png](screenshots/wazuh-installation-complete.png) | Wazuh installer completed on Kali — indexer, manager, Filebeat, dashboard |
+| 2 | [Wazuh.png](screenshots/Wazuh.png) | First login to Wazuh web UI with generated credentials |
+| 3 | [wazuh-dashboard-no-agent.png](screenshots/wazuh-dashboard-no-agent.png) | Dashboard live — 0 agents connected |
+| 4 | [sysmon-installed-verified.png](screenshots/sysmon-installed-verified.png) | Sysmon64 installed and verified on Windows 10 |
+| 5 | [windows10-wazuh-agent-running.png](screenshots/windows10-wazuh-agent-running.png) | Wazuh agent service running on endpoint |
+| 6 | [wazuh-dashboard-agent-connected.png](screenshots/wazuh-dashboard-agent-connected.png) | 1 active agent — DESKTOP-2HIJ3CV reporting |
+| 6 | [Window_Agent.png](screenshots/Window_Agent.png) | Agent details — Windows 10 Pro, IP 192.168.80.130 |
+| 7 | [wazuh-manager-running-kali.png](screenshots/wazuh-manager-running-kali.png) | Custom rules deployed, manager active |
+| 8 | [windows10-attack-simulation-registry.png](screenshots/windows10-attack-simulation-registry.png) | Attack simulation — registry persistence, recon |
+| 9 | [sysmon-eventviewer-logs.png](screenshots/sysmon-eventviewer-logs.png) | Sysmon capturing Process Create, Registry, File events |
+| 10 | [wazuh-security-events-577-alerts.png](screenshots/wazuh-security-events-577-alerts.png) | 577 alerts with MITRE ATT&CK mappings |
+| 10 | [wazuh-security-events-host.png](screenshots/wazuh-security-events-host.png) | Security events filtered by host agent |
+| 11 | [wazuh-security-alerts-detailed.png](screenshots/wazuh-security-alerts-detailed.png) | T1105, T1033, T1059.003 detected and mapped |
+| 12 | [Benchmark.png](screenshots/Benchmark.png) | CIS Windows 10 Benchmark — 394 checks, 32% score |
+
+---
+
 ## 📁 Repository Structure
 sysmon-wazuh-endpoint-lab/
 ├── README.md
@@ -111,10 +134,21 @@ sysmon-wazuh-endpoint-lab/
 │   ├── static-analysis.md
 │   └── dynamic-analysis.md
 ├── screenshots/
-│   ├── wazuh-dashboard.png
-│   ├── custom-rule-fired.png
-│   ├── sysmon-eventviewer.png
-│   └── agent-connected.png
+│   ├── README.md
+│   ├── wazuh-installation-complete.png
+│   ├── Wazuh.png
+│   ├── wazuh-dashboard-no-agent.png
+│   ├── sysmon-installed-verified.png
+│   ├── windows10-wazuh-agent-running.png
+│   ├── wazuh-dashboard-agent-connected.png
+│   ├── Window_Agent.png
+│   ├── wazuh-manager-running-kali.png
+│   ├── windows10-attack-simulation-registry.png
+│   ├── sysmon-eventviewer-logs.png
+│   ├── wazuh-security-events-577-alerts.png
+│   ├── wazuh-security-events-host.png
+│   ├── wazuh-security-alerts-detailed.png
+│   └── Benchmark.png
 └── docs/
 ├── setup-guide.md
 ├── detection-rules-explained.md

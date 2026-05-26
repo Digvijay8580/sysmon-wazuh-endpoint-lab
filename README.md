@@ -21,21 +21,42 @@ This lab replicates Tier 1-2 SOC analyst workflows including:
 ---
 
 ## 🏗️ Lab Architecture
-┌─────────────────────────────────────────────┐
-│           VMware Workstation Pro             │
-│                                             │
-│  ┌──────────────────┐  ┌─────────────────┐  │
-│  │  Windows 10 VM   │  │   Kali Linux VM │  │
-│  │  (Victim/Target) │  │  (Wazuh Server) │  │
-│  │                  │  │                 │  │
-│  │  • Sysmon 15.x   │  │  • Wazuh 4.7.5  │  │
-│  │  • Wazuh Agent   │◄─►  • Manager      │  │
-│  │  • PowerShell    │  │  • Indexer      │  │
-│  │  192.168.80.129  │  │  • Dashboard    │  │
-│  └──────────────────┘  │  192.168.80.128 │  │
-│                        └─────────────────┘  │
-│         VMnet1 - Host Only (Isolated)        │
-└─────────────────────────────────────────────┘
+
+Isolated host-only network (`VMnet1`) with endpoint telemetry flowing from Windows 10 to the Wazuh stack on Kali Linux.
+
+```mermaid
+flowchart LR
+    subgraph VMware["VMware Workstation Pro"]
+        subgraph VMnet1["VMnet1 — Host-Only (Isolated)"]
+            W10["🖥️ Windows 10 VM<br/><b>Victim / Target</b><br/>192.168.80.129<br/><br/>Sysmon 15.x<br/>Wazuh Agent<br/>PowerShell"]
+            Kali["🐧 Kali Linux VM<br/><b>Wazuh Server</b><br/>192.168.80.128<br/><br/>Wazuh 4.7.5<br/>Manager · Indexer · Dashboard"]
+        end
+    end
+    W10 <-->|"Logs & Alerts"| Kali
+```
+
+<details>
+<summary>ASCII diagram</summary>
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                   VMware Workstation Pro                      │
+│                                                               │
+│     ┌─────────────────────┐       ┌─────────────────────┐     │
+│     │    Windows 10 VM    │       │    Kali Linux VM    │     │
+│     │   (Victim/Target)   │       │   (Wazuh Server)    │     │
+│     │                     │       │                     │     │
+│     │  • Sysmon 15.x      │       │  • Wazuh 4.7.5      │     │
+│     │  • Wazuh Agent  ◄──►│       │  • Manager          │     │
+│     │  • PowerShell       │       │  • Indexer          │     │
+│     │  192.168.80.129     │       │  • Dashboard        │     │
+│     └─────────────────────┘       │  192.168.80.128     │     │
+│                                   └─────────────────────┘     │
+│              VMnet1 — Host-Only (Isolated Network)            │
+└──────────────────────────────────────────────────────────────┘
+```
+
+</details>
 
 ---
 
@@ -117,23 +138,32 @@ Full step-by-step visual documentation: [screenshots/README.md](screenshots/READ
 ---
 
 ## 📁 Repository Structure
+
+```
 sysmon-wazuh-endpoint-lab/
-├── README.md
-├── architecture/
+│
+├── 📄 README.md
+│
+├── 📂 architecture/
 │   └── lab-diagram.png
-├── sysmon-config/
+│
+├── 📂 sysmon-config/
 │   └── sysmonconfig.xml
-├── wazuh-rules/
+│
+├── 📂 wazuh-rules/
 │   └── local_rules.xml
-├── simulations/
+│
+├── 📂 simulations/
 │   ├── simulate_attacks.ps1
 │   ├── persistence_sim.ps1
 │   └── recon_sim.ps1
-├── malware-analysis/
+│
+├── 📂 malware-analysis/
 │   ├── README.md
 │   ├── static-analysis.md
 │   └── dynamic-analysis.md
-├── screenshots/
+│
+├── 📂 screenshots/                    ← Lab walkthrough (14 images)
 │   ├── README.md
 │   ├── wazuh-installation-complete.png
 │   ├── Wazuh.png
@@ -149,10 +179,12 @@ sysmon-wazuh-endpoint-lab/
 │   ├── wazuh-security-events-host.png
 │   ├── wazuh-security-alerts-detailed.png
 │   └── Benchmark.png
-└── docs/
-├── setup-guide.md
-├── detection-rules-explained.md
-└── incident-report-template.md
+│
+└── 📂 docs/
+    ├── setup-guide.md
+    ├── detection-rules-explained.md
+    └── incident-report-template.md
+```
 
 ---
 
@@ -160,19 +192,6 @@ sysmon-wazuh-endpoint-lab/
 
 See [docs/setup-guide.md](docs/setup-guide.md) for full 
 installation and configuration steps.
-
----
-
-## 📝 Resume Bullets
-
-Deployed Sysmon with SwiftOnSecurity ruleset on Windows 10
-endpoint and ingested logs into Wazuh SIEM on Kali Linux
-Developed 5 custom detection rules mapped to MITRE ATT&CK
-framework (T1003, T1547, T1033, T1059, T1543)
-Simulated credential dumping, registry persistence, and
-reconnaissance — validated 577+ alerts in Wazuh dashboard
-Performed static and dynamic malware analysis using Sysmon
-telemetry and custom Wazuh detection rules
 
 ---
 
